@@ -1,0 +1,49 @@
+---
+title: "Quick start"
+description: "Configure Coreply and get your first AI-powered suggestion in under 5 minutes."
+---
+
+<Tip>
+  The fastest way to get started is Coreply Cloud — no API account needed. You sign up, copy an access key, and you're done. If you prefer to use your own provider, follow the OpenAI-compatible path in step 2.
+</Tip>
+
+<Steps>
+  <Step title="Open Coreply">
+    Launch Coreply from your app drawer after [installing it](/installation). The main screen shows the service toggle and your current provider settings.
+  </Step>
+
+  <Step title="Configure your AI provider">
+    Scroll to **Custom API Settings** in the app and fill in three fields:
+
+    | Field | Description |
+    |---|---|
+    | **Base URL** | The OpenAI-compatible endpoint for your provider (e.g. `https://api.groq.com/openai/v1/`) |
+    | **API Key** | Your provider API key |
+    | **Model Name** | The model identifier to use (e.g. `gemini-2.0-flash`, `llama-3.3-70b-versatile`) |
+
+    **Using Coreply Cloud (recommended for new users):** Sign up at [coreply.up.nadles.com](https://coreply.up.nadles.com/), copy your access key, and paste it into the **API Key** field. Leave the Base URL and Model Name at their defaults unless the dashboard instructs otherwise.
+
+    See [AI providers](/providers/overview) for per-provider setup guides including exact URLs and recommended models.
+  </Step>
+
+  <Step title="Enable the Coreply service">
+    Toggle the master switch in the app to **On**.
+
+    Android will prompt you to grant the **accessibility permission**. Tap **Allow** and enable Coreply in the Accessibility settings screen.
+
+    <Note>
+      The accessibility permission is required. Coreply uses it to read on-screen conversation text and position the suggestion overlay above the keyboard. Without this permission, no suggestions will appear.
+    </Note>
+  </Step>
+
+  <Step title="Open a supported messaging app and start typing">
+    Open WhatsApp, Signal, Instagram, Telegram, or any other [supported app](/supported-apps) and navigate to a conversation. Begin typing a message — the Coreply suggestion overlay will appear after a brief pause.
+  </Step>
+
+  <Step title="Interact with suggestions">
+    - **Single tap** a suggestion to insert the next word into your message.
+    - **Long press** a suggestion to insert the full suggested text at once.
+
+    Suggestions update continuously as you type, so you can keep typing and a new suggestion will follow.
+  </Step>
+</Steps>

@@ -1,0 +1,85 @@
+{
+  "projectType": "saas",
+  "projectName": "Coreply",
+  "projectDescription": "An open-source Android app that provides real-time AI-powered texting suggestions as you type in messaging apps like WhatsApp, Instagram, Signal, and more.",
+  "theme": "almond",
+  "primaryColor": "#29ae9f",
+  "lightColor": "#9dd1c9",
+  "darkColor": "#040424",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "installation",
+              "quickstart"
+            ]
+          },
+          {
+            "group": "Configuration",
+            "pages": [
+              "configuration/coreply-cloud",
+              "configuration/api-settings",
+              "configuration/advanced-config"
+            ]
+          },
+          {
+            "group": "AI Providers",
+            "pages": [
+              "providers/overview",
+              "providers/google-ai-studio",
+              "providers/groq",
+              "providers/openrouter",
+              "providers/openai",
+              "providers/mistral"
+            ]
+          },
+          {
+            "group": "Supported Apps",
+            "pages": [
+              "supported-apps"
+            ]
+          },
+          {
+            "group": "Help",
+            "pages": [
+              "troubleshooting",
+              "faq"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Real-time AI-powered texting suggestions as you type",
+    "Works across 15+ messaging apps including WhatsApp, Instagram, Signal, and Telegram",
+    "Supports any OpenAI-compatible inference API",
+    "Coreply Cloud hosted option for zero-configuration setup",
+    "No intermediate data collection — traffic goes directly to your inference API",
+    "Customizable system prompt and model parameters",
+    "Advanced JSON config mode for full API request control",
+    "Regex-based trigger filtering for suggestion timing",
+    "Bubble and inline suggestion display modes",
+    "Fill-in-the-middle (FIM) support for Mistral Codestral"
+  ],
+  "publicApiSurface": [
+    "API URL (OpenAI-compatible endpoint)",
+    "API Key",
+    "Model Name",
+    "System Prompt",
+    "Temperature",
+    "Top-P",
+    "Suggestion Presentation Type (bubble / inline / both)",
+    "Advanced Request Body (JSON template with Mustache)",
+    "Suggestion Content Template ({{assistantMessage}})",
+    "Typing Regex Pattern",
+    "Debounce delay (ms)",
+    "Selected Apps",
+    "Master Switch (enable/disable accessibility service)"
+  ]
+}

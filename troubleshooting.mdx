@@ -1,0 +1,84 @@
+---
+title: "Troubleshooting"
+description: "Solutions to common problems you may encounter while using Coreply."
+---
+
+<AccordionGroup>
+  <Accordion title='"Restricted Settings" dialog when enabling accessibility'>
+    Some Android versions show a "Restricted Settings" dialog when you try to grant the accessibility permission to Coreply, blocking you from enabling it.
+
+    Follow the steps in [Google's guide for allowing restricted settings](https://support.google.com/android/answer/12623953?hl=en) to allow Coreply to use the accessibility service. After completing those steps, return to **Settings > Accessibility** and enable Coreply.
+  </Accordion>
+
+  <Accordion title="Suggestions don't appear in my app">
+    Check the following in order:
+
+    1. Open Coreply and confirm the master switch is **on**.
+    2. Go to **Settings > Accessibility** on your device and verify that the Coreply accessibility service is enabled.
+    3. In the Coreply app, tap **Select Apps** and confirm the app you are using is toggled on.
+
+    If all three are correct and suggestions still don't appear, try closing and reopening the messaging app.
+  </Accordion>
+
+  <Accordion title='Unexpected JSON error or rate limit errors'>
+    If you see an error like:
+
+    ```
+    Unexpected JSON token at offset 0: Expected start of the object '{', but had '[' instead
+    ```
+
+    This typically means you have hit the rate limit of your AI provider. This is especially common with the **Google AI Studio free tier**, which has strict per-minute request limits.
+
+    To resolve this:
+
+    - Wait a moment before typing again, which reduces the number of API calls made.
+    - Increase the debounce delay in **Customizations** to space out requests.
+    - Upgrade to a paid tier of your provider, or switch to a provider with a higher free quota such as Groq.
+  </Accordion>
+
+  <Accordion title="Banking apps block Coreply">
+    Some Asian banking apps block apps from unknown sources that hold the accessibility permission, as a security measure. If a banking app on your device stops working after you enable Coreply, this is likely the cause.
+
+    As a workaround, set up an [accessibility shortcut](https://support.google.com/accessibility/android/answer/7650693?hl=en#step_1) on your device. This lets you quickly toggle Coreply on and off — disable it before opening your banking app and re-enable it afterwards.
+
+    <Note>
+      A future Play Store listing for Coreply may resolve this issue, as apps distributed through the Play Store are typically treated differently by banking security systems.
+    </Note>
+  </Accordion>
+
+  <Accordion title='WhatsApp shows "Message" hint text as typed text'>
+    On devices running **Android 12 or lower**, WhatsApp's placeholder text "Message" may be treated as typed text by Coreply, causing suggestions to appear even when the text field is empty.
+
+    This is a known issue. There is no fix currently available. Upgrading to Android 13 or higher resolves the problem.
+  </Accordion>
+
+  <Accordion title="Suggestions don't appear for images, videos, or voice messages">
+    Coreply can only read text content from the conversation. It cannot process images, videos, voice notes, or any other non-text media.
+
+    When a conversation contains only media or the most recent message is non-text, suggestions may not appear or may be based on older text context. This is a known limitation with no current workaround.
+  </Accordion>
+
+  <Accordion title="RTL languages have limited support">
+    Right-to-left (RTL) language support in Coreply is limited. You may experience layout issues with the suggestion overlay or incorrect text insertion behavior when typing in languages such as Arabic, Hebrew, or Persian.
+
+    This is a known limitation. Improved RTL support is not yet available.
+  </Accordion>
+
+  <Accordion title="Suggestions feel slow">
+    Slow suggestions are usually caused by a high-latency AI provider or model. Try the following:
+
+    - **Switch to Groq** — Groq offers very low inference latency and is one of the fastest free options available.
+    - **Reduce the debounce delay** — In **Customizations**, lower the debounce delay so suggestions are requested sooner after you stop typing.
+    - **Avoid reasoning models** — Models like GPT-5, Gemini 2.5, and Claude 3.7+ use extended reasoning that adds significant latency. Use a standard chat model instead (7B+ parameter models generally work well).
+  </Accordion>
+
+  <Accordion title="Coreply doesn't follow app animations">
+    In some apps, the suggestion overlay may lag behind or not track correctly during animations and transitions. This is a known performance issue that affects:
+
+    - **Facebook Messenger**
+    - **Google Messages**
+    - **Notification Replies**
+
+    There is no fix currently available. The overlay will reposition correctly once the animation completes.
+  </Accordion>
+</AccordionGroup>

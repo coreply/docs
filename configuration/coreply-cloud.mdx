@@ -1,0 +1,27 @@
+---
+title: "Coreply Cloud"
+description: "Use the hosted Coreply Cloud service to get AI suggestions with zero API configuration."
+---
+
+Coreply Cloud is the fastest way to get started. You sign up once, copy an access key, and paste it into the app.
+
+## Set up Coreply Cloud
+
+<Steps>
+  <Step title="Create a Coreply Cloud account">
+    Visit [coreply.up.nadles.com](https://coreply.up.nadles.com/) and sign up for an account.
+  </Step>
+  <Step title="Copy your access key">
+    After signing in, locate your access key on the dashboard and copy it.
+  </Step>
+  <Step title="Open the Coreply app">
+    Launch Coreply. The main screen shows the **Custom API Settings** section directly.
+  </Step>
+  <Step title="Paste your access key">
+    Paste your access key into the **API Key** field. Leave the **Base URL** and **Model Name** fields at their defaults unless the Coreply Cloud dashboard instructs otherwise.
+  </Step>
+</Steps>
+
+<Note>
+  Coreply Cloud routes your conversation context through Coreply's backend before it reaches the AI model. This differs from self-configured providers, where traffic goes directly from your device to the provider's API. If keeping traffic off intermediate servers matters to you, use a [self-configured provider](/configuration/api-settings) instead.
+</Note>

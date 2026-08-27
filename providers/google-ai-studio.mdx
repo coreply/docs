@@ -1,0 +1,46 @@
+---
+title: "Google AI Studio"
+description: "Set up Coreply with Google AI Studio to use Gemini models via the free Gemini API."
+---
+
+Google AI Studio provides access to Google's Gemini models through an OpenAI-compatible API. It offers a free tier that works well with Coreply for everyday use.
+
+<Note>
+  AI Studio's free tier has rate limits. If you see the error `Unexpected JSON token at offset 0: Expected start of the object '{', but had '[' instead` — this is a rate limit response from Google, not a bug in Coreply. Wait a moment and try again, or switch to a paid tier.
+</Note>
+
+## Setup
+
+<Steps>
+  <Step title="Get your API key">
+    Go to [aistudio.google.com/apikey](https://aistudio.google.com/apikey) and create a new API key.
+  </Step>
+  <Step title="Enter your credentials in Coreply">
+    Open Coreply's settings and fill in the following values:
+
+    | Field | Value |
+    | ----- | ----- |
+    | API URL | `https://generativelanguage.googleapis.com/v1beta/openai/` |
+    | API Key | Your key from AI Studio |
+    | Model Name | See recommended models below |
+  </Step>
+  <Step title="Choose a model">
+    The following models are recommended for use with Coreply on AI Studio:
+
+    ```text
+    gemini-2.0-flash
+    gemini-2.0-flash-lite
+    gemini-2.5-flash-lite
+    ```
+  </Step>
+</Steps>
+
+## Caveats
+
+<Warning>
+  `gemini-2.5-flash` reasons by default in AI Studio. This adds latency before each suggestion and is not recommended for real-time use.
+</Warning>
+
+<Warning>
+  The `gemma-3` family in AI Studio does not support system instructions, which Coreply requires. These models are not compatible.
+</Warning>

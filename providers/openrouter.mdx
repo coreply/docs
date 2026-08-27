@@ -1,0 +1,56 @@
+---
+title: "OpenRouter"
+description: "Set up Coreply with OpenRouter to access hundreds of models through a single API key."
+---
+
+OpenRouter is a unified API gateway that gives you access to models from many providers — including Google, OpenAI, Meta, and Mistral — through a single endpoint and API key.
+
+<Note>
+  Some OpenRouter endpoints are available for free with strict rate limits. Free models are fine for testing, but are not recommended for regular use. Paid models have higher limits and better availability.
+</Note>
+
+## Setup
+
+<Steps>
+  <Step title="Get your API key">
+    Go to [openrouter.ai/settings/keys](https://openrouter.ai/settings/keys) and create a new API key.
+  </Step>
+  <Step title="Enter your credentials in Coreply">
+    Open Coreply's settings and fill in the following values:
+
+    | Field | Value |
+    | ----- | ----- |
+    | API URL | `https://openrouter.ai/api/v1/` |
+    | API Key | Your key from OpenRouter |
+    | Model Name | See recommended models below |
+  </Step>
+  <Step title="Choose a model">
+    <Tabs>
+      <Tab title="Free models">
+        These models are available at no cost with strict rate limits:
+
+        ```text
+        google/gemma-3-27b-it:free
+        meta-llama/llama-3.3-8b-instruct:free
+        ```
+      </Tab>
+      <Tab title="Paid models">
+        These models offer better reliability and performance:
+
+        ```text
+        google/gemini-2.5-flash
+        google/gemini-2.0-flash-001
+        openai/gpt-4.1-mini
+        openai/gpt-4.1
+        mistralai/codestral-2508
+        ```
+      </Tab>
+    </Tabs>
+
+    You're welcome to try other models available on OpenRouter.
+  </Step>
+</Steps>
+
+<Tip>
+  OpenRouter disables reasoning by default for models that support it, such as `google/gemini-2.5-flash`. This makes those models suitable for real-time use with Coreply, where low latency matters.
+</Tip>

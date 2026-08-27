@@ -1,0 +1,52 @@
+---
+title: "FAQ"
+description: "Answers to frequently asked questions about Coreply."
+---
+
+<AccordionGroup>
+  <Accordion title="Is Coreply free?">
+    Yes. The Coreply app is free and open source under the [AGPL-3.0 license](https://github.com/coreply/coreply/blob/main/LICENSE).
+
+    To use Coreply, you need one of the following:
+
+    - **Your own AI API key** — Many providers offer free tiers (Google AI Studio and Groq are good starting points).
+    - **Coreply Cloud** — A hosted option (with free and paid plans) available at [coreply.up.nadles.com](https://coreply.up.nadles.com/). Sign up and paste your access key into the app.
+  </Accordion>
+
+  <Accordion title="Does Coreply collect my messages?">
+    When you use your own API key, all traffic goes directly from your device to the AI provider you configured. No data passes through any Coreply servers.
+
+    If you use **Coreply Cloud**, traffic is routed through hosted servers to reach the AI provider.
+
+    As of April 2026, Coreply does not store, log, or sell your message content.
+  </Accordion>
+
+  <Accordion title="Can I use my own AI server?">
+    Yes. Coreply works with any OpenAI-compatible endpoint. In the app settings, configure the following three fields:
+
+    - **Base URL** — The endpoint URL of your server (e.g., `http://localhost:11434/v1` )
+    - **API Key** — Your API key, or any string if your server doesn't require one
+    - **Model Name** — The exact model identifier your server expects
+
+    This lets you run Coreply against self-hosted models, local inference servers, or any compatible third-party service.
+  </Accordion>
+
+  <Accordion title="Why does Coreply need accessibility permission?">
+    Coreply uses Android's accessibility service to read the text you are typing and to display suggestion overlays inside messaging apps. This is the only way an app can integrate with third-party apps on Android without those apps being modified to support it.
+  </Accordion>
+
+  <Accordion title="Can I add support for a new app?">
+    Yes. Coreply is open source and contributions are welcome. Visit the [GitHub repository](https://github.com/coreply/coreply) and open a pull request.
+
+    Please reach out before making significant contributions — the project is in active development and breaking changes may occur.
+  </Accordion>
+
+  <Accordion title="What is the debounce delay?">
+    The debounce delay controls how long Coreply waits after you stop typing before it sends a request to the AI provider for a suggestion.
+
+    - **Lower delay** — Suggestions appear faster, but more API requests are made (which may exhaust free-tier rate limits more quickly).
+    - **Higher delay** — Fewer API requests are made, but suggestions take longer to appear after you pause.
+
+    You can adjust the debounce delay in the **Customizations** section of the app settings. The right value depends on your typing speed and the latency of your chosen provider.
+  </Accordion>
+</AccordionGroup>

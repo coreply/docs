@@ -1,0 +1,209 @@
+---
+title: "Advanced Config"
+description: "Take full control of the API request body using a JSON template with Mustache variables."
+---
+
+<Warning>
+  **Advanced config is** **not expected to work out-of-the-box** as it is intended to be customized according to each specific setup. Users of the advanced config mode should read this guide before proceeding.
+</Warning>
+
+Advanced mode lets you write the entire request body that Coreply sends to your AI provider. This is useful when you need to go beyond what simple mode exposes — changing `reasoning` mode, switching prompt structure, or passing provider-specific parameters.
+
+## Enable advanced mode
+
+<Steps>
+  <Step title="Open Custom API Settings">
+    In the Coreply app, scroll to the **Custom API Settings** section.
+  </Step>
+  <Step title="Select Advanced">
+    Tap the **Advanced** radio button at the top of the section. The individual simple-mode fields are replaced by a **Request Body** text area and a **Suggestion Content** field.
+  </Step>
+  <Step title="Edit the request body and URL">
+    Modify the JSON template in the **Request Body** field. Coreply fills in the Mustache variables at request time before sending the payload to the API. The URL should be set to the **full URL** instead of the base URL in simple mode.
+  </Step>
+</Steps>
+
+The body is a [Mustache](https://mustache.github.io/) template. Coreply uses [jmustache](https://github.com/samskivert/jmustache), so it supports [special variables](https://github.com/samskivert/jmustache?tab=readme-ov-file#special-variables) of jmustache.
+
+Before the request is sent, Coreply renders it with the current conversation context.
+
+### String values are mapped (what a `string map` is)
+
+All `string` fields are exposed as a `map` with four variants so you can embed them safely in JSON. It will be referred as "string map" in this guide. The available variants are:
+
+| Variant | Description |
+| --- | --- |
+| `{{field.raw}}` | Original unescaped string |
+| `{{field.jsonEscaped}}` | JSON-escaped (backslashes, quotes, newlines escaped) |
+| `{{field.regexLiteral}}` | Regex-literal surrounded by`\Q…\E`) |
+| `{{field.regexLiteralEscaped}}` | Regex-literal first, then JSON-escaped |
+
+> **In JSON templates, use `.jsonEscaped`** so that special characters in the conversation don't break the JSON structure.
+
+#### Top-level fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `{{currentTyping}}` | string map | What the user is currently typing |
+| `{{currentTypingTrimmed}}` | string map | `currentTyping` without the last incomplete token |
+| `{{currentTypingLastToken}}` | string map | The last incomplete token the user is typing |
+| `{{currentTypingEndsWithSeparator}}` | boolean | `true` if the typing ends with a space or punctuation |
+| `{{pkgName}}` | string map | Package name of the active app |
+| `{{<package>_<name>_<of>_<app>}}` | true | Field name is the package name of the active app with `.` replaced by `_`, value is always `true` |
+| `pastMessages` | list | The conversation history as a list of turns (oldest first) |
+
+String map fields are `null` / falsy when empty, so `{{#currentTyping}}…{{/currentTyping}}` can be used to conditionally render content only when the user is typing something.
+
+#### The `pastMessages` list
+
+`{{#pastMessages}}…{{/pastMessages}}` iterates over the conversation history as a list of **turns** (oldest first). Each turn represents **one or more consecutive messages sent by the same role** (either all sent by the user, or all received from the other party).
+
+**List items of `pastMessages`:**
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `{{sent}}` | boolean | `true` if this turn contains messages sent by the user ("Me") |
+| `{{received}}` | boolean | `true` if this turn contains messages received from the other party |
+| `{{sender}}` | string map | The sender name/role (e.g. `"Me"`) |
+| `{{messages}}` | list | The list of individual messages in this turn (see below) |
+
+**The** `messages`**list within a** `pastMessages` **turn:**
+
+Use `{{#messages}}…{{/messages}}` to iterate over individual messages in the current turn:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `{{content}}` | string map | The message text |
+| `{{sent}}` | boolean | `true` if sent by the user |
+| `{{received}}` | boolean | `true` if received from the other party |
+| `{{sender}}` | string map | The sender name/role (e.g. `"Me"`) |
+
+### Example
+
+```json
+{
+  "model": "gpt-4o-mini",
+  "temperature": 0.7,
+  "top_p": 1.0,
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are an AI texting assistant. Generate a suggested reply based on the conversation history and current typing. Output only the suggested text without quotation marks or extra formatting."
+    },
+    {
+      "role": "user",
+      "content": "Chat history:\n{{#pastMessages}}{{#messages}}{{#sent}}Me: {{/sent}}{{#received}}Them: {{/received}}{{content.jsonEscaped}}\n{{/messages}}{{/pastMessages}}{{#currentTyping}}Current typing: {{currentTyping.jsonEscaped}}{{/currentTyping}}{{^currentTyping}}Suggest a reply.{{/currentTyping}}"
+    }
+  ],
+  "max_tokens": 50,
+  "stream": false
+}
+```
+
+#### Per-app system prompt using package name booleans
+
+```json
+{
+  "model": "gpt-4o-mini",
+  "messages": [
+    {
+      "role": "system",
+      "content": "{{#com_whatsapp}}You are texting on WhatsApp. Keep replies short and casual.{{/com_whatsapp}}{{#com_slack}}You are messaging on Slack. Replies can be more professional.{{/com_slack}}{{^com_whatsapp}}{{^com_slack}}You are an AI texting assistant.{{/com_slack}}{{/com_whatsapp}}"
+    },
+    {
+      "role": "user",
+      "content": "{{#pastMessages}}{{#messages}}{{#sent}}Me: {{/sent}}{{#received}}Them: {{/received}}{{content.jsonEscaped}}\n{{/messages}}{{/pastMessages}}{{#currentTyping}}I started typing: {{currentTyping.jsonEscaped}}{{/currentTyping}}"
+    }
+  ],
+  "max_tokens": 60,
+  "stream": false
+}
+```
+
+> **Note:** package name dots are replaced with underscores, so `com.whatsapp` becomes `com_whatsapp`.
+
+#### Prefill the user's current typing as the start of the assistant turn
+
+```json
+{
+  "model": "gpt-4o-mini",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a texting assistant. Output only the suggested message text."
+    },
+    {
+      "role": "user",
+      "content": "{{#pastMessages}}{{#messages}}{{#sent}}Me: {{/sent}}{{#received}}Them: {{/received}}{{content.jsonEscaped}}\n{{/messages}}{{/pastMessages}}"
+    },
+    {
+      "role": "assistant",
+      "content": "{{#currentTyping}}{{currentTyping.jsonEscaped}}{{/currentTyping}}"
+    }
+  ],
+  "max_tokens": 60,
+  "stream": false
+}
+```
+
+Here the user's current typing is prefilled as the beginning of the assistant turn — the model then continues from it. Pair this with the **Suggestion Content Template** below to assemble the full suggestion.
+
+> **Note:** Some models are bad at continuing from partial words, so `currentTypingTrimmed` comes in handy here to prefill only the last complete token, allowing the model to generate the full last word. You can hint the last word somewhere else in the prompt.
+
+---
+
+## 2. Suggestion Content Template
+
+Found in the **Advanced** config section below the Request Body field.
+
+After the model responds, this Mustache template is rendered to form the final suggestion text shown to the user. This exists because some API setups use **assistant prefill** — you send the user's current typing as the start of the assistant's response, and the model returns only the _continuation_. The template lets you join them back together.
+
+The same context fields from the request body are available, plus two extras:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `{{assistantMessage}}` | string | The raw text returned by the model |
+| `{{assistantMessageAutoTrimCurrentTyping}}` | string | The model response, but if it starts with `currentTyping`, that part would be trimmed automatically |
+| `{{assistantMessageAutoTrimCurrentTypingTrimmed}}` | string | Same as above, but `currentTypingTrimmed` is used for the trimming instead of `currentTyping` (only complete tokens are prefixed) |
+| _(all other fields previously stated)_ | - | Same as request body template, with `.raw` / `.jsonEscaped` / `.regexLiteral` / `.regexLiteralEscaped` variants |
+
+Unlike `currentTyping` and other string map fields, **`assistantMessage` and `assistantMessageAutoTrimCurrentTyping` are already plain strings** so no variant suffix is needed.
+
+After rendering, any two consecutive spaces is collapsed to one, handling the case where `currentTyping` ends with a space and the model response also starts with one (or vice versa).
+
+### Show response as-is
+
+```text
+{{assistantMessage}}
+```
+
+The model response is shown as-is.
+
+### Prepend the user's current typing (usually with assistant prefill)
+
+If your request body sends `currentTyping` as the start of the assistant turn (the model only returns the continuation):
+
+```text
+{{currentTyping.raw}}{{assistantMessage}}
+```
+
+For example, the user has typed `"sounds good, I'll be"` and the model returns `" there at 7"`. The suggestion becomes `"sounds good, I'll be there at 7"`.
+
+#### Add a suffix
+
+Not sure who would need this, you can also add a suffix like this:
+
+```text
+{{assistantMessage}} 😊
+```
+
+## When to use advanced mode
+
+Advanced mode is the right choice when you need to:
+
+- Use non-standard model parameters that your provider supports but that simple mode doesn't expose.
+- Restructure the prompt entirely
+
+<Tip>
+  You can enable **Show errors** in Coreply settings to help debugging the template.
+</Tip>

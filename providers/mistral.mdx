@@ -1,0 +1,62 @@
+---
+title: "Mistral"
+description: "Set up Coreply with Mistral, including support for the low-latency FIM API with Codestral."
+---
+
+Coreply supports two modes with Mistral's API: FIM (Fill-in-the-Middle) via Codestral, and standard chat completion for other Mistral models. FIM mode is more efficient and is the recommended option when using Mistral.
+
+<Note>
+  Mistral offers a free tier, but compatibility details with Coreply's usage patterns are not yet fully confirmed. Check [Mistral's official documentation](https://docs.mistral.ai) for current free tier limits.
+</Note>
+
+## FIM mode (Codestral)
+
+FIM (Fill-in-the-Middle) is a specialized inference mode supported by Codestral. It uses fewer tokens and has lower latency than standard chat completion, making it well-suited for real-time suggestions.
+
+<Tip>
+  FIM mode is the most efficient way to use Mistral with Coreply. Use it whenever you want the fastest response times.
+</Tip>
+
+<Steps>
+  <Step title="Get your API key">
+    Go to [console.mistral.ai/api-keys](https://console.mistral.ai/api-keys) and create a new API key.
+  </Step>
+  <Step title="Enter your credentials in Coreply">
+    Open Coreply's settings and fill in the following values:
+
+    | Field | Value |
+    | ----- | ----- |
+    | API URL | `https://api.mistral.ai/v1/fim/` |
+    | API Key | Your key from Mistral |
+    | Model Name | `codestral-latest` |
+  </Step>
+</Steps>
+
+## Chat completion mode
+
+For other Mistral models, use the standard chat completion endpoint.
+
+<Steps>
+  <Step title="Get your API key">
+    Go to [console.mistral.ai/api-keys](https://console.mistral.ai/api-keys) and create a new API key.
+  </Step>
+  <Step title="Enter your credentials in Coreply">
+    Open Coreply's settings and fill in the following values:
+
+    | Field | Value |
+    | ----- | ----- |
+    | API URL | `https://api.mistral.ai/v1/` |
+    | API Key | Your key from Mistral |
+    | Model Name | See recommended models below |
+  </Step>
+  <Step title="Choose a model">
+    The following models are recommended for chat completion mode:
+
+    ```text
+    mistral-medium-2508
+    mistral-small-2409
+    ```
+
+    You're welcome to try other models from Mistral's catalog.
+  </Step>
+</Steps>

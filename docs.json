@@ -1,0 +1,70 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "almond",
+  "name": "Coreply",
+  "colors": {
+    "primary": "#29ae9f",
+    "light": "#9dd1c9",
+    "dark": "#040424"
+  },
+  "logo": {
+    "light": "https://media.brand.dev/ebc1681b-3646-428e-908f-9298d0aab67d.webp",
+    "dark": "https://media.brand.dev/ebc1681b-3646-428e-908f-9298d0aab67d.webp"
+  },
+  "favicon": "https://media.brand.dev/0e51b161-e6f1-444e-8cc3-cbc63229f1be.png",
+  "navbar": {
+    "primary": {
+      "type": "github",
+      "href": "https://github.com/coreply/coreply"
+    }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "installation",
+              "quickstart"
+            ]
+          },
+          {
+            "group": "Supported Apps",
+            "pages": [
+              "supported-apps"
+            ]
+          },
+          {
+            "group": "Configuration",
+            "pages": [
+              "configuration/coreply-cloud",
+              "configuration/api-settings",
+              "configuration/advanced-config"
+            ]
+          },
+          {
+            "group": "Providers",
+            "pages": [
+              "providers/overview",
+              "providers/google-ai-studio",
+              "providers/groq",
+              "providers/openrouter",
+              "providers/openai",
+              "providers/mistral"
+            ]
+          },
+          {
+            "group": "Help",
+            "pages": [
+              "troubleshooting",
+              "faq"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

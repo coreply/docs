@@ -1,0 +1,38 @@
+---
+title: "Groq"
+description: "Set up Coreply with Groq for fast, low-latency inference on open-source models."
+---
+
+Groq offers extremely fast inference on popular open-source models. Its free tier works well with Coreply, making it a great starting point.
+
+<Note>
+  Groq's free tier has rate limits. If you encounter errors on the free tier, check whether you've hit your rate limit before reporting an issue.
+</Note>
+
+## Setup
+
+<Steps>
+  <Step title="Get your API key">
+    Go to [console.groq.com/keys](https://console.groq.com/keys) and create a new API key.
+  </Step>
+  <Step title="Enter your credentials in Coreply">
+    Open Coreply's settings and fill in the following values:
+
+    | Field | Value |
+    | ----- | ----- |
+    | API URL | `https://api.groq.com/openai/v1/` |
+    | API Key | Your key from Groq |
+    | Model Name | See recommended models below |
+  </Step>
+  <Step title="Choose a model">
+    The following models are recommended for use with Coreply on Groq:
+
+    ```text
+    openai/gpt-oss-20b
+    llama-3.1-8b-instant
+    llama-3.3-70b-versatile
+    ```
+
+    You're welcome to try other models available in Groq's model catalog.
+  </Step>
+</Steps>

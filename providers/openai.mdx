@@ -1,0 +1,48 @@
+---
+title: "OpenAI"
+description: "Set up Coreply with OpenAI to use GPT-4.1 and GPT-4o models."
+---
+
+Coreply supports OpenAI's API directly. You can use GPT-4.1 and GPT-4o model variants for fast, reliable suggestions.
+
+<Warning>
+  OpenAI's free tier is very restrictive. You'll likely need to add credits to your account before Coreply can make API calls successfully. Note that a ChatGPT subscription does **not** include API credits — these are separate and must be purchased at [platform.openai.com](https://platform.openai.com).
+</Warning>
+
+## Setup
+
+<Steps>
+  <Step title="Get your API key">
+    Go to [platform.openai.com/api-keys](https://platform.openai.com/api-keys) and create a new secret key.
+  </Step>
+  <Step title="Enter your credentials in Coreply">
+    Open Coreply's settings and fill in the following values:
+
+    | Field | Value |
+    | ----- | ----- |
+    | API URL | `https://api.openai.com/v1/` |
+    | API Key | Your secret key from OpenAI |
+    | Model Name | See recommended models below |
+  </Step>
+  <Step title="Choose a model">
+    The following models are recommended for use with Coreply:
+
+    ```text
+    gpt-4.1-mini
+    gpt-4.1-nano
+    gpt-4.1
+    gpt-4o-mini
+    gpt-4o
+    ```
+  </Step>
+</Steps>
+
+## Model notes
+
+<Tip>
+  `gpt-4.1-mini` offers the best cost-to-performance ratio for Coreply. The `mini` and `nano` variants are faster and cheaper while still producing high-quality suggestions.
+</Tip>
+
+<Warning>
+  The `gpt-5` family are reasoning models. They work with Coreply but add significant latency before each suggestion, making them a poor fit for real-time texting assistance.
+</Warning>

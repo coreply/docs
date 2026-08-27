@@ -1,0 +1,64 @@
+---
+title: "Providers"
+description: "An overview of supported AI providers and how Coreply connects to them."
+---
+
+Coreply connects to any OpenAI-compatible inference API. That means you can use hosted providers like Google AI Studio, Groq, or OpenAI, as well as any self-hosted endpoint that follows the OpenAI API format.
+
+## What you need
+
+To connect Coreply to a provider, you need three things:
+
+- **API URL** — the base endpoint for the provider's inference API
+- **API Key** — your authentication credential from the provider
+- **Model Name** — the identifier of the model you want to use
+
+Each provider page below shows you exactly where to find these values.
+
+## Choosing a model
+
+Model size has a meaningful impact on output quality with Coreply. Smaller models under 7 billion parameters often struggle to follow Coreply's output format, which can result in poor or unusable suggestions. Models at 7B parameters and above generally work well.
+
+Reasoning models — such as GPT-5, Gemini 2.5, and Claude 3.7 and above — are technically compatible, but they introduce extra latency before each suggestion appears. For a real-time texting experience, non-reasoning models are a better fit. Some providers like OpenRouter disable reasoning by default, which can make these models usable.
+
+## Supported model families
+
+The following model families have been tested and confirmed to work with Coreply's prompt format:
+
+| Model | Supported |
+| --- | --- |
+| Claude 3 & 4 Family | ✅ |
+| Llama 3 & 4 Family | ✅ |
+| Gemma 2 & 3 Family | ✅ |
+| OpenAI GPT Family | ✅ |
+| Google Gemini Family | ✅ |
+
+Many other models should also work. You're welcome to experiment with models not listed here.
+
+## Provider setup guides
+
+<CardGroup cols={2}>
+  <Card title="Google AI Studio" icon="google" href="/providers/google-ai-studio">
+    Use Gemini models via the free AI Studio API.
+  </Card>
+
+  <Card title="Groq" icon="bolt" href="/providers/groq">
+    Fast inference on open-source models with a free tier.
+  </Card>
+
+  <Card title="OpenRouter" icon="route" href="/providers/openrouter">
+    Access hundreds of models from a single API key.
+  </Card>
+
+  <Card title="OpenAI" icon="microchip" href="/providers/openai">
+    Use GPT-4.1 and GPT-4o models directly from OpenAI.
+  </Card>
+
+  <Card title="Mistral" icon="wind" href="/providers/mistral">
+    Use Mistral models, including FIM mode with Codestral.
+  </Card>
+
+  <Card title="Custom provider" icon="server" href="/providers/overview">
+    Any OpenAI-compatible endpoint works. Find the API URL, API Key, and Model Name in your provider's docs.
+  </Card>
+</CardGroup>

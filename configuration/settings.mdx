@@ -1,0 +1,37 @@
+---
+title: "Configuration"
+description: "Reference for Coreply settings that are independent of your AI provider."
+---
+
+Open Coreply. The main screen contains **Select Apps** and **Coreply Settings**. Provider-specific setup lives under [Providers](/providers/overview).
+
+## Select Apps
+
+Choose the apps where Coreply is active. Coreply only runs inside the apps you enable here.
+
+## Suggestion mode
+
+Controls where suggestions appear on screen.
+
+- `overlay` shows the floating bubble below the text field.
+- `inline` shows ghost text inside the text field.
+- `both` shows both at the same time.
+
+## Debounce (ms)
+
+How long Coreply waits after you stop typing before it requests a suggestion. Range: `0` to `1000` ms.
+
+- Lower values feel faster, but send more requests.
+- Higher values reduce request volume, but add delay before suggestions appear.
+
+## Enable Regex Filter
+
+When enabled, Coreply only requests a suggestion when your current typing matches the regex pattern below.
+
+## Typing Regex Pattern
+
+The regex used by **Enable Regex Filter**. The default pattern, `^.*[\s.!?,;:]$`, triggers suggestions after a word ending in whitespace or punctuation.
+
+## Show errors
+
+When enabled, API and network errors are shown in the on-screen overlay while you type.

@@ -22,11 +22,11 @@ description: "Answers to frequently asked questions about Coreply."
   </Accordion>
 
   <Accordion title="Can I use my own AI server?">
-    Yes. Coreply works with any OpenAI-compatible endpoint. In the app settings, configure the following three fields:
+    Yes. Choose **OpenAI Compatible** under **API Provider**. Then configure the following fields:
 
-    - **Base URL** — The endpoint URL of your server (e.g., `http://localhost:11434/v1` )
-    - **API Key** — Your API key, or any string if your server doesn't require one
-    - **Model Name** — The exact model identifier your server expects
+    - **Base URL** — The endpoint URL of your server (for example, `http://localhost:11434/v1`)
+    - **API Key** — Your API key, or any non-empty string if your server doesn't require one
+    - **Model** — The exact model identifier your server expects
 
     This lets you run Coreply against self-hosted models, local inference servers, or any compatible third-party service.
   </Accordion>
@@ -47,6 +47,6 @@ description: "Answers to frequently asked questions about Coreply."
     - **Lower delay** — Suggestions appear faster, but more API requests are made (which may exhaust free-tier rate limits more quickly).
     - **Higher delay** — Fewer API requests are made, but suggestions take longer to appear after you pause.
 
-    You can adjust the debounce delay in the **Customizations** section of the app settings. The right value depends on your typing speed and the latency of your chosen provider.
+    You can adjust the debounce delay in **Coreply Settings**. The right value depends on your typing speed and the latency of your chosen provider.
   </Accordion>
 </AccordionGroup>

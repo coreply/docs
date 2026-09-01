@@ -1,0 +1,39 @@
+---
+title: "OpenAI-compatible API"
+description: "Set up Coreply with any OpenAI-compatible endpoint, including self-hosted and local servers."
+---
+
+Use this provider when your API speaks the OpenAI chat-completions format but is not one of Coreply's built-in integrations.
+
+## Setup
+
+<Steps>
+  <Step title="Choose OpenAI Compatible in the app">
+    Open Coreply and choose **OpenAI Compatible** under **API Provider**.
+  </Step>
+  <Step title="Enter your endpoint settings">
+    Fill in the following values:
+
+    | Field | Value |
+    | ----- | ----- |
+    | Name | Leave `openAICompatible` unless you need a different namespace for **Provider Options** |
+    | Base URL | Your OpenAI-compatible endpoint, such as `http://localhost:11434/v1` |
+    | API key | Your provider key, or any non-empty string if the endpoint does not enforce auth |
+    | Model | The model ID expected by that endpoint |
+  </Step>
+  <Step title="Disable reasoning when supported">
+    If the endpoint supports OpenAI-style reasoning controls, set **Provider Options** to:
+
+    ```json
+    {"openAICompatible": {"reasoningEffort": "none"}}
+    ```
+  </Step>
+</Steps>
+
+<Tip>
+  The key inside **Provider Options** must match the value in **Name**.
+</Tip>
+
+This provider also exposes the standard text-generation settings such as instructions, temperature, top-p, penalties, retries, timeout, and seed.
+
+If you need a fully custom request body, use [Advanced config](/providers/advanced-config).

@@ -1,0 +1,206 @@
+---
+title: "Advanced config"
+description: "Build a custom JSON request body using Mustache templates."
+---
+
+<Warning>
+  The endpoint must still return the final assistant text in
+  `choices[0].message.content`.
+</Warning>
+
+Advanced mode lets you edit the full request body that Coreply sends. Use it when the built-in provider forms are not enough.
+
+## Enable advanced mode
+
+<Steps>
+  <Step title="Choose Advanced Mode">
+    In Coreply, open **API Provider** and choose **Advanced Mode**.
+  </Step>
+  <Step title="Fill in the endpoint">
+    Enter the full **Request URL**. If the endpoint uses bearer auth, fill in
+    **Authorization Bearer**.
+  </Step>
+  <Step title="Edit the templates">
+    Update the **Body Template** and **Suggestion Template** fields.
+  </Step>
+</Steps>
+
+The body template uses [Mustache](https://mustache.github.io/). Coreply supplies the following context to the template and the resulting string is the request body.
+
+## Current context format
+
+Templates should start from `contexts`. It contains the structured contexts that Coreply has collected for the current request.
+
+| Field          | Type   | Description                                                                                               |
+| -------------- | ------ | --------------------------------------------------------------------------------------------------------- |
+| `contexts`     | list   | Structured context objects. Use this when your backend understands Coreply context objects.               |
+| `contextsJson` | string | The same `contexts` value pre-serialized as JSON. Use this when your request body needs a raw JSON array. |
+
+Strings inside `contexts` are plain strings. If you need JSON-safe interpolation inside a string value, use the compatibility fields below or send `contexts` as structured JSON.
+
+### Context objects
+
+Each item in `contexts` has these top-level fields:
+
+| Field       | Type   | Description                           |
+| ----------- | ------ | ------------------------------------- |
+| `type`      | string | `chat` or `screen`                    |
+| `profileId` | string | The profile that produced the context |
+| `label`     | string | Optional label such as `messages`     |
+| `dropRule`  | object | Context retention rule metadata       |
+| `data`      | object | The actual context payload            |
+
+### Chat contexts
+
+When `type` is `chat`, `data` has this shape:
+
+| Field        | Type   | Description                 |
+| ------------ | ------ | --------------------------- |
+| `data.id`    | string | Optional chat identifier    |
+| `data.title` | string | Optional chat title         |
+| `data.turns` | list   | Conversation turns in order |
+
+Each item in `data.turns`:
+
+| Field      | Type    | Description                 |
+| ---------- | ------- | --------------------------- |
+| `sender`   | string  | Optional sender name        |
+| `userSent` | boolean | `true` for the user's turns |
+| `messages` | list    | Messages in that turn       |
+
+Each item in `messages`:
+
+| Field   | Type   | Description          |
+| ------- | ------ | -------------------- |
+| `body`  | string | Message text         |
+| `time`  | string | Optional timestamp   |
+| `quote` | string | Optional quoted text |
+
+### Screen contexts
+
+When `type` is `screen`, `data` is a text tree:
+
+| Field           | Type   | Description                              |
+| --------------- | ------ | ---------------------------------------- |
+| `data.text`     | string | Optional text at this node               |
+| `data.children` | list   | Optional child nodes with the same shape |
+
+## Suggestion template
+
+After the API call completes, Coreply reads `choices[0].message.content` from the JSON response and exposes it to the suggestion template.
+
+| Field                                          | Type   | Description                                                                    |
+| ---------------------------------------------- | ------ | ------------------------------------------------------------------------------ |
+| `assistantMessage`                             | string | The raw text returned by the model                                             |
+| `assistantMessageAutoTrimCurrentTyping`        | string | `assistantMessage` with `currentTyping` trimmed from the start when it matches |
+| `assistantMessageAutoTrimCurrentTypingTrimmed` | string | Same as above, but trims `currentTypingTrimmed` instead                        |
+
+### Show the response as-is
+
+```text
+{{assistantMessage}}
+```
+
+### Prepend the user's current typing
+
+```text
+{{currentTyping.raw}}{{assistantMessage}}
+```
+
+## Compatibility fields
+
+Coreply still exposes the older `TypingInfo.contextMap` fields for compatibility. Use them when you want to build a plain chat prompt inside the JSON body. They only cover chat history and typing helpers. They do not include screen contexts.
+
+### String map fields
+
+Compatibility `string` fields are exposed as a string map with four variants:
+
+| Variant                         | Description                           |
+| ------------------------------- | ------------------------------------- |
+| `{{field.raw}}`                 | Original unescaped string             |
+| `{{field.jsonEscaped}}`         | JSON-escaped string                   |
+| `{{field.regexLiteral}}`        | Regex-literal form of the string      |
+| `{{field.regexLiteralEscaped}}` | Regex-literal form, then JSON-escaped |
+
+In JSON string values, use `.jsonEscaped`.
+
+### Compatibility top-level fields
+
+| Field                            | Type       | Description                                         |
+| -------------------------------- | ---------- | --------------------------------------------------- |
+| `currentTyping`                  | string map | What the user is currently typing                   |
+| `currentTypingTrimmed`           | string map | `currentTyping` without the last incomplete token   |
+| `currentTypingLastToken`         | string map | The last incomplete token the user is typing        |
+| `currentTypingEndsWithSeparator` | boolean    | `true` when typing ends with a space or punctuation |
+| `pastMessages`                   | list       | Chat history only, grouped into turns               |
+
+`pastMessages` does not include screen contexts. Use `contexts` if you need them.
+
+### The `pastMessages` list
+
+`{{#pastMessages}}...{{/pastMessages}}` iterates over chat turns from oldest to newest.
+
+| Field      | Type       | Description                             |
+| ---------- | ---------- | --------------------------------------- |
+| `sent`     | boolean    | `true` if the turn was sent by the user |
+| `received` | boolean    | `true` if the turn was received         |
+| `sender`   | string map | Sender name or role                     |
+| `messages` | list       | Messages inside the turn                |
+
+Each item in `messages`:
+
+| Field      | Type       | Description                |
+| ---------- | ---------- | -------------------------- |
+| `content`  | string map | Message text               |
+| `sent`     | boolean    | `true` if sent by the user |
+| `received` | boolean    | `true` if received         |
+| `sender`   | string map | Sender name or role        |
+
+### Compatibility example
+
+```json
+{
+  "model": "gpt-5.6-luna",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are an AI texting assistant. Generate a suggested reply based on the conversation history and current typing. Output only the suggested text without quotation marks or extra formatting."
+    },
+    {
+      "role": "user",
+      "content": "Chat history:\n{{#pastMessages}}{{#messages}}{{#sent}}Me: {{/sent}}{{#received}}Them: {{/received}}{{content.jsonEscaped}}\n{{/messages}}{{/pastMessages}}{{#currentTyping}}Current typing: {{currentTyping.jsonEscaped}}{{/currentTyping}}{{^currentTyping}}Suggest a reply.{{/currentTyping}}"
+    }
+  ],
+  "max_tokens": 50,
+  "stream": false
+}
+```
+
+### Compatibility example with assistant prefill
+
+```json
+{
+  "model": "<your-model-name>",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a texting assistant. Output only the suggested message text."
+    },
+    {
+      "role": "user",
+      "content": "{{#pastMessages}}{{#messages}}{{#sent}}Me: {{/sent}}{{#received}}Them: {{/received}}{{content.jsonEscaped}}\n{{/messages}}{{/pastMessages}}"
+    },
+    {
+      "role": "assistant",
+      "content": "{{#currentTyping}}{{currentTyping.jsonEscaped}}{{/currentTyping}}"
+    }
+  ],
+  "max_tokens": 60,
+  "stream": false
+}
+```
+
+<Tip>
+  Enable **Show errors** under [Configuration](/configuration/settings) while
+  you are debugging templates.
+</Tip>

@@ -32,7 +32,7 @@ description: "Solutions to common problems you may encounter while using Coreply
     To resolve this:
 
     - Wait a moment before typing again, which reduces the number of API calls made.
-    - Increase the debounce delay in **Customizations** to space out requests.
+    - Increase the debounce delay in **Coreply Settings** to space out requests.
     - Upgrade to a paid tier of your provider, or switch to a provider with a higher free quota such as Groq.
   </Accordion>
 
@@ -68,8 +68,8 @@ description: "Solutions to common problems you may encounter while using Coreply
     Slow suggestions are usually caused by a high-latency AI provider or model. Try the following:
 
     - **Switch to Groq** — Groq offers very low inference latency and is one of the fastest free options available.
-    - **Reduce the debounce delay** — In **Customizations**, lower the debounce delay so suggestions are requested sooner after you stop typing.
-    - **Avoid reasoning models** — Models like GPT-5, Gemini 2.5, and Claude 3.7+ use extended reasoning that adds significant latency. Use a standard chat model instead (7B+ parameter models generally work well).
+    - **Reduce the debounce delay** — In **Coreply Settings**, lower the debounce delay so suggestions are requested sooner after you stop typing.
+    - **Avoid reasoning-heavy model tiers** — Use the recommended low-latency models on each [provider page](/providers/overview).
   </Accordion>
 
   <Accordion title="Coreply doesn't follow app animations">

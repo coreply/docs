@@ -1,0 +1,43 @@
+---
+title: "Vercel AI Gateway"
+description: "Set up Coreply with Vercel AI Gateway to route requests to upstream providers through one endpoint."
+---
+
+AI Gateway is a routing layer. You still choose an upstream model from another provider, such as OpenAI or Google.
+
+## Setup
+
+<Steps>
+  <Step title="Create a gateway key">
+    Create an AI Gateway key, or use a Vercel access token if that is how your gateway is configured.
+  </Step>
+  <Step title="Choose Vercel AI Gateway in the app">
+    Open Coreply and choose **Vercel AI Gateway** under **API Provider**.
+  </Step>
+  <Step title="Enter your settings">
+    Fill in the following values:
+
+    | Field | Value |
+    | ----- | ----- |
+    | API key | Your AI Gateway key or Vercel access token |
+    | Model | A namespaced upstream model such as `openai/gpt-5.6-luna` or `google/gemini-3.5-flash-lite` |
+    | Team ID or slug | Optional |
+  </Step>
+  <Step title="Configure the upstream provider options">
+    Use the upstream provider namespace in **Provider Options**. For example:
+
+    ```json
+    {"openai": {"reasoningEffort": "none"}}
+    ```
+
+    or
+
+    ```json
+    {"google": {"thinkingConfig": {"thinkingLevel": "minimal"}}}
+    ```
+  </Step>
+</Steps>
+
+<Tip>
+  **Model** must use the provider-prefixed format that AI Gateway expects, such as `openai/...` or `google/...`.
+</Tip>

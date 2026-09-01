@@ -1,0 +1,42 @@
+---
+title: "xAI"
+description: "Set up Coreply with xAI to use Grok models directly."
+---
+
+Coreply supports xAI through the built-in `xAI` provider.
+
+## Setup
+
+<Steps>
+  <Step title="Get your API key">
+    Create an API key in [console.x.ai](https://console.x.ai/).
+  </Step>
+  <Step title="Choose xAI in the app">
+    Open Coreply and choose **xAI** under **API Provider**.
+  </Step>
+  <Step title="Enter your settings">
+    Fill in the following values:
+
+    | Field | Value |
+    | ----- | ----- |
+    | API key | Your xAI API key |
+    | Model | `grok-4.3` |
+  </Step>
+  <Step title="Disable reasoning">
+    Set **Provider Options** to:
+
+    ```json
+    {"xai": {"reasoningEffort": "none"}}
+    ```
+  </Step>
+</Steps>
+
+## Recommended models
+
+```text
+grok-4.3
+```
+
+<Note>
+  If you use `grok-4.6`, the lowest documented setting is `low`, so it is usually slower to first token than `grok-4.3` for Coreply.
+</Note>

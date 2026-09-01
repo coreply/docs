@@ -1,0 +1,43 @@
+---
+title: "Google Vertex"
+description: "Set up Coreply with Vertex AI to use Gemini models from your Google Cloud project."
+---
+
+Use this provider when you want Gemini through Vertex AI instead of the Gemini API from AI Studio.
+
+## Setup
+
+<Steps>
+  <Step title="Choose Google Vertex in the app">
+    Open Coreply and choose **Google Vertex** under **API Provider**.
+  </Step>
+  <Step title="Enter your Vertex settings">
+    Fill in the following values:
+
+    | Field | Value |
+    | ----- | ----- |
+    | Model | `gemini-3.5-flash-lite` |
+    | API key | Optional, if you use API-key auth |
+    | Project | Your Google Cloud project ID if you use service-account auth |
+    | Location | Your Vertex region if you use service-account auth |
+    | Service account credentials | Optional alternative to API-key auth |
+  </Step>
+  <Step title="Minimize thinking">
+    Set **Provider Options** to:
+
+    ```json
+    {"vertex": {"thinkingConfig": {"thinkingLevel": "minimal"}}}
+    ```
+  </Step>
+</Steps>
+
+## Recommended models
+
+```text
+gemini-3.5-flash-lite
+gemini-3.6-flash
+```
+
+<Note>
+  Current Gemini 3.x models use `thinkingLevel`. `minimal` is the lowest setting. If you use an older Gemini 2.5 model instead, use `{"vertex": {"thinkingConfig": {"thinkingBudget": 0}}}`.
+</Note>

@@ -15,42 +15,31 @@ OpenRouter is a unified API gateway that gives you access to models from many pr
   <Step title="Get your API key">
     Go to [openrouter.ai/settings/keys](https://openrouter.ai/settings/keys) and create a new API key.
   </Step>
-  <Step title="Enter your credentials in Coreply">
-    Open Coreply's settings and fill in the following values:
+  <Step title="Choose OpenRouter in the app">
+    Open Coreply and choose **OpenRouter** under **API Provider**.
+  </Step>
+  <Step title="Enter your settings">
+    Fill in the following values:
 
     | Field | Value |
     | ----- | ----- |
-    | API URL | `https://openrouter.ai/api/v1/` |
     | API Key | Your key from OpenRouter |
-    | Model Name | See recommended models below |
+    | Model | `openai/gpt-5.6-luna` |
+    | Provider Options | `{"openrouter": {"reasoning": {"enabled": false, "effort": "none"}}}` |
   </Step>
   <Step title="Choose a model">
-    <Tabs>
-      <Tab title="Free models">
-        These models are available at no cost with strict rate limits:
+    These models are a good fit for Coreply:
 
-        ```text
-        google/gemma-3-27b-it:free
-        meta-llama/llama-3.3-8b-instruct:free
-        ```
-      </Tab>
-      <Tab title="Paid models">
-        These models offer better reliability and performance:
-
-        ```text
-        google/gemini-2.5-flash
-        google/gemini-2.0-flash-001
-        openai/gpt-4.1-mini
-        openai/gpt-4.1
-        mistralai/codestral-2508
-        ```
-      </Tab>
-    </Tabs>
+    ```text
+    openai/gpt-5.6-luna
+    google/gemini-3.5-flash-lite
+    qwen/qwen3.8-27b
+    ```
 
     You're welcome to try other models available on OpenRouter.
   </Step>
 </Steps>
 
 <Tip>
-  OpenRouter disables reasoning by default for models that support it, such as `google/gemini-2.5-flash`. This makes those models suitable for real-time use with Coreply, where low latency matters.
+  OpenRouter lets you switch models without changing providers. For Coreply, prefer models that already support `none` or `minimal` reasoning.
 </Tip>

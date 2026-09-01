@@ -1,0 +1,30 @@
+---
+title: "Mistral FIM"
+description: "Set up Coreply with Mistral's fill-in-the-middle endpoint through Codestral."
+---
+
+This provider uses Mistral's fill-in-the-middle API instead of the normal chat-completions API.
+
+## Setup
+
+<Steps>
+  <Step title="Get your API key">
+    Go to [console.mistral.ai/api-keys](https://console.mistral.ai/api-keys) and create a new API key.
+  </Step>
+  <Step title="Choose Mistral FIM in the app">
+    Open Coreply and choose **Mistral FIM** under **API Provider**.
+  </Step>
+  <Step title="Enter your settings">
+    Fill in the following values:
+
+    | Field | Value |
+    | ----- | ----- |
+    | Base URL | `https://api.mistral.ai/v1/fim/` |
+    | API key | Your Mistral API key |
+    | Model | `codestral-latest` |
+  </Step>
+</Steps>
+
+<Note>
+  This provider calls Mistral's `/v1/fim/completions` endpoint. It is best when you want continuation-style completion from the current typing prefix.
+</Note>

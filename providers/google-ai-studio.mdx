@@ -1,9 +1,9 @@
 ---
 title: "Google AI Studio"
-description: "Set up Coreply with Google AI Studio to use Gemini models via the free Gemini API."
+description: "Set up Coreply with the Google Gemini API from AI Studio."
 ---
 
-Google AI Studio provides access to Google's Gemini models through an OpenAI-compatible API. It offers a free tier that works well with Coreply for everyday use.
+Coreply's `Google (Gemini API)` provider connects directly to the Gemini API. AI Studio is where you create the API key.
 
 <Note>
   AI Studio's free tier has rate limits. If you see the error `Unexpected JSON token at offset 0: Expected start of the object '{', but had '[' instead` — this is a rate limit response from Google, not a bug in Coreply. Wait a moment and try again, or switch to a paid tier.
@@ -15,32 +15,28 @@ Google AI Studio provides access to Google's Gemini models through an OpenAI-com
   <Step title="Get your API key">
     Go to [aistudio.google.com/apikey](https://aistudio.google.com/apikey) and create a new API key.
   </Step>
-  <Step title="Enter your credentials in Coreply">
-    Open Coreply's settings and fill in the following values:
+  <Step title="Choose Google in the app">
+    Open Coreply and choose **Google (Gemini API)** under **API Provider**.
+  </Step>
+  <Step title="Enter your settings">
+    Fill in the following values:
 
     | Field | Value |
     | ----- | ----- |
-    | API URL | `https://generativelanguage.googleapis.com/v1beta/openai/` |
     | API Key | Your key from AI Studio |
-    | Model Name | See recommended models below |
+    | Model | `gemini-3.5-flash-lite` |
+    | Provider Options | `{"google": {"thinkingConfig": {"thinkingLevel": "minimal"}}}` |
   </Step>
   <Step title="Choose a model">
     The following models are recommended for use with Coreply on AI Studio:
 
     ```text
-    gemini-2.0-flash
-    gemini-2.0-flash-lite
-    gemini-2.5-flash-lite
+    gemini-3.5-flash-lite
+    gemini-3.6-flash
     ```
   </Step>
 </Steps>
 
-## Caveats
-
 <Warning>
-  `gemini-2.5-flash` reasons by default in AI Studio. This adds latency before each suggestion and is not recommended for real-time use.
-</Warning>
-
-<Warning>
-  The `gemma-3` family in AI Studio does not support system instructions, which Coreply requires. These models are not compatible.
+  Current Gemini 3.x models do not fully turn thinking off. `minimal` is the lowest setting.
 </Warning>

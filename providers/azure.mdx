@@ -1,0 +1,38 @@
+---
+title: "Azure OpenAI"
+description: "Set up Coreply with Azure-hosted OpenAI deployments."
+---
+
+Use this provider when your OpenAI model is deployed through Azure OpenAI.
+
+## Setup
+
+<Steps>
+  <Step title="Deploy a model in Azure OpenAI">
+    Create an Azure deployment for a low-latency model such as `gpt-5.6-luna` or `gpt-5.6-terra`.
+  </Step>
+  <Step title="Choose Azure in the app">
+    Open Coreply and choose **Azure** under **API Provider**.
+  </Step>
+  <Step title="Enter your Azure settings">
+    Fill in the following values:
+
+    | Field | Value |
+    | ----- | ----- |
+    | Model | Your Azure deployment name |
+    | API key | Your Azure OpenAI API key |
+    | Resource name or Base URL | Provide one of them |
+    | API version | Fill this in if your Azure deployment requires it |
+  </Step>
+  <Step title="Disable reasoning">
+    Set **Provider Options** to:
+
+    ```json
+    {"azure": {"reasoningEffort": "none"}}
+    ```
+  </Step>
+</Steps>
+
+<Tip>
+  In this provider, **Model** is your deployment name, not the raw upstream model ID.
+</Tip>

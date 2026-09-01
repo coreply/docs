@@ -18,6 +18,20 @@
       "href": "https://github.com/coreply/coreply"
     }
   },
+  "redirects": [
+    {
+      "source": "/configuration/coreply-cloud",
+      "destination": "/providers/coreply-cloud"
+    },
+    {
+      "source": "/configuration/api-settings",
+      "destination": "/providers/openai-compatible"
+    },
+    {
+      "source": "/configuration/advanced-config",
+      "destination": "/providers/advanced-config"
+    }
+  ],
   "navigation": {
     "tabs": [
       {
@@ -38,22 +52,29 @@
             ]
           },
           {
-            "group": "Configuration",
-            "pages": [
-              "configuration/coreply-cloud",
-              "configuration/api-settings",
-              "configuration/advanced-config"
-            ]
-          },
-          {
             "group": "Providers",
             "pages": [
               "providers/overview",
+              "providers/coreply-cloud",
+              "providers/openai-compatible",
               "providers/google-ai-studio",
+              "providers/google-vertex",
               "providers/groq",
               "providers/openrouter",
               "providers/openai",
-              "providers/mistral"
+              "providers/azure",
+              "providers/xai",
+              "providers/mistral",
+              "providers/mistral-fim",
+              "providers/minimax",
+              "providers/vercel-ai-gateway",
+              "providers/advanced-config"
+            ]
+          },
+          {
+            "group": "Configuration",
+            "pages": [
+              "configuration/settings"
             ]
           },
           {

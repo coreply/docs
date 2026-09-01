@@ -1,9 +1,9 @@
 ---
 title: "Introduction"
-description: "Coreply is an open-source Android app that provides real-time AI-powered texting suggestions as you type, directly inside your messaging apps."
+description: "Coreply is an open-source Android app that provides real-time AI-powered suggestions as you type inside supported apps."
 ---
 
-Coreply uses Android's accessibility service to read the conversation on screen and send it to an AI provider of your choice. As you type, suggestions appear in a floating overlay — no switching apps, no copy-pasting.
+Coreply uses Android's accessibility service to read relevant visible text on screen and send it to an AI provider of your choice. As you type, suggestions appear in a floating overlay — no switching apps, no copy-pasting.
 
 <CardGroup cols={2}>
   <Card title="Installation" icon="download" href="/installation">
@@ -13,17 +13,18 @@ Coreply uses Android's accessibility service to read the conversation on screen 
     Get your first suggestion in under 5 minutes.
   </Card>
   <Card title="AI providers" icon="microchip" href="/providers/overview">
-    Connect Coreply Cloud, OpenAI, Google, Groq, OpenRouter, xAI, Mistral, MiniMax, Azure, Vercel AI Gateway, or any OpenAI-compatible endpoint.
+    Connect Coreply Cloud, OpenAI, Google, Groq, OpenRouter, xAI, Mistral,
+    MiniMax, Azure, Vercel AI Gateway, or any OpenAI-compatible endpoint.
   </Card>
   <Card title="Supported apps" icon="mobile" href="/supported-apps">
-    See the full list of supported messaging apps.
+    See the full list of explicitly supported apps.
   </Card>
 </CardGroup>
 
 ## Key features
 
 - **Real-time suggestions** — the overlay updates as you type, showing context-aware completions drawn from the current conversation.
-- **15+ supported apps** — works with WhatsApp, Instagram, Signal, Telegram, Hinge, Tinder, Discord, Viber, Microsoft Teams, LINE, Snapchat, Facebook Messenger, Google Messages, Mattermost, Gmail (quick reply), Heymandi, Beeper, and Android notification replies.
+- **20+ supported apps** — includes WhatsApp, WhatsApp Business, Telegram, Nekogram, Instagram, Signal, Discord, Hinge, Tinder, LINE, Snapchat, Facebook Messenger, Google Messages, Microsoft Teams, Mattermost, Viber, Heymandi, Beeper, ChatGPT, Perplexity, and Android notification replies.
 - **Bring your own AI provider** — connect OpenAI, Google Gemini API, Google Vertex, Groq, OpenRouter, Azure OpenAI, xAI, Mistral, MiniMax, Vercel AI Gateway, or any OpenAI-compatible endpoint.
 - **Coreply Cloud** — a hosted option that requires no API key setup. Sign up and paste a single access key.
 - **No data collection** — when using your own provider, conversation data travels directly from your device to the inference API. Nothing passes through intermediate servers.
@@ -31,7 +32,7 @@ Coreply uses Android's accessibility service to read the conversation on screen 
 
 ## How it works
 
-Coreply runs as an Android accessibility service. When you open a supported messaging app and start typing, Coreply reads the visible conversation history and your current draft, then sends a prompt to your configured AI provider. The response is trimmed to remove text you have already typed, and the remaining suggestion appears in a floating overlay above the keyboard.
+Coreply runs as an Android accessibility service. When you open a supported app and start typing, Coreply reads the relevant visible text and your current draft, then sends a prompt to your configured AI provider. The response is trimmed to remove text you have already typed, and the remaining suggestion appears in a floating overlay above the keyboard.
 
 - **Single tap** on a suggestion to insert the next word.
 - **Long press** to insert the entire suggestion at once.

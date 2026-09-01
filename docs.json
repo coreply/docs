@@ -8,8 +8,8 @@
     "dark": "#040424"
   },
   "logo": {
-    "light": "https://media.brand.dev/ebc1681b-3646-428e-908f-9298d0aab67d.webp",
-    "dark": "https://media.brand.dev/ebc1681b-3646-428e-908f-9298d0aab67d.webp"
+    "light": "/images/coreply_new.webp",
+    "dark": "/images/coreply_new.webp"
   },
   "favicon": "https://media.brand.dev/0e51b161-e6f1-444e-8cc3-cbc63229f1be.png",
   "navbar": {

@@ -1,0 +1,58 @@
+---
+title: Prompting
+description: Learn how Coreply formats prompts and chooses model responses.
+---
+
+# Prompting
+
+The current prompt format is flexible and has been briefly tested with these model families:
+
+| Model                | Supported? |
+|----------------------| ---------- |
+| Claude 3 & 4 Family  | ✅         |
+| Llama 3 & 4 Family   | ✅         |
+| Gemma 2 & 3 Family   | ✅         |
+| OpenAI GPT Family    | ✅         |
+| Google Gemini Family | ✅         |
+
+Many other models should work as well. Try them out to find the best fit for your needs.
+
+## Note on thinking/reasoning models
+
+Reasoning models work with Coreply, but their reasoning adds latency before suggestions appear. They are generally not the best choice for Coreply. Avoid reasoning models such as GPT-5, Gemini 2.5, Claude 3.7/4, and Qwen 3 unless your provider disables thinking by default. OpenRouter appears to do this.
+
+## System message
+
+This is an example system message. Check the latest version in the source code because it may change over time.
+
+```text
+You are an AI texting assistant. You will be given a list of text messages between the user (indicated by 'Message I sent:'), and other people (indicated by their names or simply 'Message I received:'). You may also receive a screenshot of the conversation. Your job is to suggest the next message the user should send. Match the tone and style of the conversation. The user may request the message start or end with a certain prefix (both could be parts of a longer word). The user may quote a specific message. In this case, make sure your suggestions are about the quoted message.
+Output the suggested text only. Do not output anything else. Do not surround output with quotation marks.
+```
+
+## User message
+
+This is an example user message. Check the latest version in the source code because it may change over time. The last line specifies the message the user is currently typing.
+
+```text
+Given this chat history
+Message I sent: Hello, I would like to know more about this product.
+Message I received: Hi, what product are you interested in?
+Message I sent: I am looking at the new wireless charger.
+
+In addition to the message I sent,
+What else should I send?
+The message should start with 'What col'.
+```
+
+## Assistant response
+
+The LLM might respond with:
+
+```text
+What color options do you have?
+```
+
+## Parsing
+
+Coreply removes text you have already typed from the output. For example, if you type `What col`, Coreply shows `or options do you have?`. Most LLMs are poor at completing partial words, so Coreply asks them to output the full word and removes the part you already entered.

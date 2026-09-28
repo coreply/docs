@@ -74,7 +74,8 @@
           {
             "group": "Configuration",
             "pages": [
-              "configuration/settings"
+              "configuration/settings",
+              "configuration/prompting"
             ]
           },
           {
